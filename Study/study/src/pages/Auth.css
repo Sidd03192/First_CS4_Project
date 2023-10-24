@@ -1,0 +1,31 @@
+/* Auth.css */
+
+.ath {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+  }
+  
+  .ath p {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+  
+  .ath button {
+    padding: 10px 20px;
+    background-color: #4285f4; /* Google blue */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .ath button:hover {
+    background-color: #357ae8; /* Slightly darker blue on hover */
+  }
+  
