@@ -1,18 +1,22 @@
 import React from 'react'
-import { Auth } from './Auth'
-import {motion} from "framer-motion"
 
+import {motion} from "framer-motion"
+import {Schedule} from '../components/scheduler/schedule'
 
 
 export const Dash = ()=> {
 
   return (
-    <motion.div
+   <div className='main'>
+  <h1 className='main'>dashboard</h1>
+  < div className='schedule'>
+    <Schedule/>
+  </div>
+   </div>
    
-    >
-    <h1>dashboard</h1>
+   
+   
 
-    </motion.div>
   );
 }
 

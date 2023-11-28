@@ -1,5 +1,5 @@
 import React from 'react';
-import { Auth } from './Auth';
+import { Auth } from './Auth/Authh';
 import {useState, useRef} from 'react'
 import Cookies from "universal-cookie";
 import { Chat } from './chat';
