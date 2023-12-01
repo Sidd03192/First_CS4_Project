@@ -1,12 +1,12 @@
 import "./Auth.css";
 import { auth, provider } from "../../components/firebase";
-import { signInWithPopup, onAuthStateChanged,signInWithEmailAndPassword,createUserWithEmailAndPassword } from "firebase/auth";
+import {  onAuthStateChanged,signInWithEmailAndPassword,createUserWithEmailAndPassword, signInWithPopup ,signInWithRedirect} from "firebase/auth";
 import Cookies from "universal-cookie";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 const cookies = new Cookies();
 
-export const Auth = (props) => {
+export const Authh = (props) => {
   const [user, setUser] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -28,11 +28,10 @@ export const Auth = (props) => {
   const signInWithGoogle = async () => {
     try {
       console.log("Attempting Google Sign-In...");
-      const result = await signInWithPopup(auth, provider);
+      const result = await signInWithRedirect(auth, provider);
       console.log("Google Sign-In Result:", result);
       cookies.set("auth-token", result.user.refreshToken);
       props.setIsAuth(true); // sets the state as true :)
-      history.goBack(); // Redirect to the previous page
 
     } catch (err) {
       console.error("Google Sign-In Error:", err.message);
@@ -52,10 +51,10 @@ export const Auth = (props) => {
     if (email&&password)
     {
       try {
-        console.log("Attempting Email/Password Sign-In...");
-        const result = await signInWithEmailAndPassword(auth, email, password);
-        console.log("Email/Password Sign-In Result:", result);
-        cookies.set("auth-token", result.user.refreshToken);
+        console.log("I like cookies");
+        //const result = await signInWithEmailAndPassword(auth, email, password);
+       // console.log("Email/Password Sign-In Result:", result);
+        //cookies.set("auth-token", result.user.refreshToken);
         props.setIsAuth(true);
         history.goBack(); // Redirect to the previous page
       } catch (err) {
@@ -150,7 +149,9 @@ export const Auth = (props) => {
         </p>
         <p className="p line">Or With</p>
         <div className="flex-row">
-          <button className="btn google" onClick={signInWithGoogle}>
+        <button className="btn google" onClick={signInWithGoogle}>
+  
+
             <svg
               version="1.1"
               width="20"

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Auth } from './Auth/Authh';
+import { Authh } from './Auth/Authh';
 import {useState, useRef} from 'react'
 import Cookies from "universal-cookie";
 import { Chat } from './chat';
@@ -23,7 +23,7 @@ if ( !isAuth)
       <div className="App"> 
       <h1> Hello </h1>    
        
-      <Auth setIsAuth={setIsAuth}/> 
+      <Authh setIsAuth={setIsAuth}/> 
      
       {/* how to use props*/}      
       </div>
