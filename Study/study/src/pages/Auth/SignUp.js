@@ -1,5 +1,5 @@
 import "./Auth.css";
-import { auth, provider } from "../../components/firebase";
+import { auth, provider } from "../../firebase";
 import { signInWithPopup, onAuthStateChanged,signInWithEmailAndPassword,createUserWithEmailAndPassword } from "firebase/auth";
 import Cookies from "universal-cookie";
 import { useState, useEffect } from "react";

@@ -7,18 +7,17 @@ import inbox from '../img/envelope.png';
 import settings from '../img/settings.png';
 import help from '../img/question.png';
 import logoutImg from '../img/log-out.png'; // Renamed to avoid conflict
-import { Auth } from './Auth/Authh';
 import Cookies from "universal-cookie";
 import { getAuth, signOut } from "firebase/auth";
 import { BrowserRouter, Routes, Route, Link, useLocation, Navigate } from "react-router-dom"; // Import Link from React Router
 
 const cookies = new Cookies();
 
-export const Profile = () => {
+export const Profile = (props) => {
   const [open, setOpen] = useState(false);
   const menuRef = useRef(null);
   const [isAuth, setIsAuth] = useState(cookies.get("auth-token"));
-
+console.log(props.name +"in profile");
   const toggle = () => {
     setOpen(!open);
   }
@@ -56,11 +55,11 @@ export const Profile = () => {
     return (
       <div className='profile'>
         <div className='menu-container'>
-          <div className='menu-trigger'>
-            <img onClick={toggle} src={Login} alt={Login} />
+          <div className= {isAuth ? 'menu-trigger':"loginglow"}>
+            <img onClick={toggle} src={props.photo} alt={Login} />
           </div>
           <div className={`dropdown-menu ${open ? 'active' : 'inactive'}`} ref={menuRef}>
-            <h3>User Name <br /><span>User membership</span></h3>
+            <h3>{props.name} <br /><span>{props.email}</span></h3>
             <ul>
               <DropdownItem img={user} text={"My Profile"} />
               <DropdownItem img={edit} text={"Edit Profile"} />

@@ -1,25 +1,37 @@
 import "./Auth.css";
-import { auth, provider } from "../../components/firebase";
-import {  onAuthStateChanged,signInWithEmailAndPassword,createUserWithEmailAndPassword, signInWithPopup ,signInWithRedirect} from "firebase/auth";
+import { auth, provider } from "../../firebase";
+import {  onAuthStateChanged,signInWithEmailAndPassword,createUserWithEmailAndPassword, signInWithRedirect} from "firebase/auth";
 import Cookies from "universal-cookie";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { getAuth } from "firebase/auth";
 const cookies = new Cookies();
 
 export const Authh = (props) => {
-  const [user, setUser] = useState(null);
+  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error,setError] = useState(false);
   const history = useNavigate(); // Add useNavigate
-
+  const auth = getAuth();
+  const [user, setUser] = useState(auth.currentUser);
+  if (user !== null) {
+    // The user object has basic properties such as display name, email, etc.
+    const displayName = user.displayName;
+    const email = user.email;
+    const photoURL = user.photoURL;
   // glow effect for sign in button
- 
+  }
   const buttonClassName = !(email && password) ? "button-submit" : 'button-submit-glow';
   const emptyClassName= (error)?'error':'';
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (authUser) => {
       setUser(authUser);
+      if ( user!=null)
+      {
+        cookies.set("auth-token", user.refreshToken);
+
+      }
     });
 
     return () => unsubscribe();
@@ -32,6 +44,7 @@ export const Authh = (props) => {
       console.log("Google Sign-In Result:", result);
       cookies.set("auth-token", result.user.refreshToken);
       props.setIsAuth(true); // sets the state as true :)
+      console.log ( 'logged in ');
 
     } catch (err) {
       console.error("Google Sign-In Error:", err.message);
@@ -51,12 +64,12 @@ export const Authh = (props) => {
     if (email&&password)
     {
       try {
-        console.log("I like cookies");
+   
         //const result = await signInWithEmailAndPassword(auth, email, password);
        // console.log("Email/Password Sign-In Result:", result);
         //cookies.set("auth-token", result.user.refreshToken);
         props.setIsAuth(true);
-        history.goBack(); // Redirect to the previous page
+
       } catch (err) {
         console.error("Email/Password Sign-In Error:", err.message);
       }
@@ -211,4 +224,4 @@ export const Authh = (props) => {
       </div>
     );
   }
-  
+

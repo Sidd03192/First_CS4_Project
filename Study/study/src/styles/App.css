@@ -129,7 +129,18 @@ ul li a{
   border-radius: 50%;
   cursor: pointer;
   background-color: #f5f5f5; /* Light color */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(200, 0, 0, 0.1);
+}
+.loginglow {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  height: 60px;
+  width: 60px;
+  border-radius: 50%;
+  cursor: pointer;
+  background-color: #f5f5f5; /* Light color */
+  animation : shadowOnOff 2s linear infinite;
 }
 
 .dropdown-menu {
@@ -221,4 +232,17 @@ h3 span {
   max-width: 100px;
   color: #333; /* Change text color */
   transition: color 0.3s ease-in-out;
+}
+
+
+
+
+
+@keyframes shadowOnOff {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0); /* Initial and final shadow */
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(150, 0, 250, 20); /* Intermediate shadow */
+  }
 }

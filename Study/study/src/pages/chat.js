@@ -1,7 +1,7 @@
 
 import {useEffect, useState} from "react";
 import {addDoc,collection,onSnapshot,orderBy,query,serverTimestamp, where}from "firebase/firestore";
-import {auth,db} from "../components/firebase";
+import {auth,db} from "../firebase";
 import {motion } from "framer-motion";
 //import "../Chat.css"
 

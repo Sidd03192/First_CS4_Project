@@ -9,7 +9,7 @@ import { Auth } from './Auth/Authh';
 import Cookies from "universal-cookie";
 import { signOut,getAuth } from 'firebase/auth';
 import {Profile} from "./Profile"
-export const Header = () => {
+export const Header = (props) => {
     const cookies = new Cookies();
     const [isAuth, setIsAuth] = useState(cookies.get("auth-token"));
   
@@ -57,11 +57,15 @@ export const Header = () => {
             </ul>
 
             <ul className="profile"> 
-                <li>                 <Profile/>
+                <li>                 <Profile name ={props.name} email={props.email} photo={props.photo}/>
                 
                 </li>
             </ul>
-
+            <ul>
+                <li>
+                <Link to="/learn"> Questions </Link>
+                </li>
+            </ul>
           </div>
 </div>
   );
