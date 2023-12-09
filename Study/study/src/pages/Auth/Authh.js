@@ -1,6 +1,7 @@
 import "./Auth.css";
+import { Alert } from '@mui/material';
 import { auth, provider } from "../../firebase";
-import {  onAuthStateChanged,signInWithEmailAndPassword,createUserWithEmailAndPassword, signInWithRedirect} from "firebase/auth";
+import {  onAuthStateChanged,signInWithEmailAndPassword,createUserWithEmailAndPassword, signInWithPopup} from "firebase/auth";
 import Cookies from "universal-cookie";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -12,9 +13,10 @@ export const Authh = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error,setError] = useState(false);
-  const history = useNavigate(); // Add useNavigate
+  //const [alertbutton,setalertbutton]=useState(false);
   const auth = getAuth();
   const [user, setUser] = useState(auth.currentUser);
+  //const navigate = useNavigate();
   if (user !== null) {
     // The user object has basic properties such as display name, email, etc.
     const displayName = user.displayName;
@@ -27,10 +29,10 @@ export const Authh = (props) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (authUser) => {
       setUser(authUser);
+      
       if ( user!=null)
       {
-        cookies.set("auth-token", user.refreshToken);
-
+        cookies.set("auth-token", user.refreshToken); //navigate("./dash");
       }
     });
 
@@ -40,16 +42,15 @@ export const Authh = (props) => {
   const signInWithGoogle = async () => {
     try {
       console.log("Attempting Google Sign-In...");
-      const result = await signInWithRedirect(auth, provider);
+      const result = await signInWithPopup(auth, provider);
       console.log("Google Sign-In Result:", result);
       cookies.set("auth-token", result.user.refreshToken);
-      props.setIsAuth(true); // sets the state as true :)
-      console.log ( 'logged in ');
-
+ 
+      setUser(auth.currentUser);
+      window.location.reload();
     } catch (err) {
       console.error("Google Sign-In Error:", err.message);
     }
-
   };
   
   const handleEmailChange = (event) => {
@@ -75,6 +76,7 @@ export const Authh = (props) => {
       }
     }
     else{
+      console.log("sign in with email and password error");
       setError(true);
     }
       
@@ -85,7 +87,8 @@ export const Authh = (props) => {
 
     return (
       <div className="auth">
-      <form className="form" id="login">
+
+      <div className="form" id="login">
         <div className="flex-column">
           <label>Email </label>
         </div>
@@ -220,7 +223,7 @@ export const Authh = (props) => {
             Apple
           </button>
         </div>
-      </form>
+      </div>
       </div>
     );
   }

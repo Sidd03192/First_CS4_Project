@@ -7,7 +7,7 @@ import { db } from '../firebase'; // Update the path based on your project struc
 import { getAuth } from 'firebase/auth';
 import AddLevelForm from './AddLevelForm'; // Update the path based on your project structure
 import "./Levels.css"
-const LevelsPage = () => {
+const LevelsPage = (props) => {
   const { levelId } = useParams();
   const [user, setUser] = useState(getAuth().currentUser);
   const [levels, setLevels] = useState([]);
@@ -33,54 +33,32 @@ const LevelsPage = () => {
     fetchLevels();
   }, []);
 
-  const handleAddLevel = async () => {
-    try {
-      // Assuming you have a 'levels' collection and each document contains a 'questions' subcollection
-      const levelsCollection = collection(db, 'levels', user.uid);
-      const newLevelRef = doc(levelsCollection, levelId);
-
-      // Add the question and answer to the 'questions' subcollection
-      const questionsCollection = collection(newLevelRef, 'questions');
-      await setDoc(questionsCollection, {
-        question: 'Sample Question',
-        answer: 'Sample Answer',
-        created_at: new Date(),
-      });
-
-      // Fetch levels again to update the state
-      const updatedLevelsSnapshot = await getDocs(levelsCollection);
-      const updatedLevelsData = updatedLevelsSnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-
-      setLevels(updatedLevelsData);
-    } catch (error) {
-      console.error('Error adding level:', error);
-    }
-  };
+  
 
   return (
     <div className="level">
       <h1>Levels</h1>
-      {user && (
-        <>
-          <p>Welcome, {user.displayName}!</p>
-          {/* Render AddLevelForm only for authenticated users */}
-          <AddLevelForm userId={user.uid} />
-          <button onClick={handleAddLevel}>Add Sample Level</button>
-        </>
-      )}
-      <ul>
+
+      <ul className='levels'>
         {levels.map((level) => (
           <li key={level.id}>
             {/* Link to the LevelDetailPage for the specific level */}
-            <Link to={`/level/${level.id}`}>{`Level ${level.id}`}</Link>
+            <Link className="levels" to={`/level/${level.id}`}>{`Level ${level.id}`}</Link>
           </li>
         ))}
       </ul>
+
+      {user && (
+        <>
+          <p>Hi {user.displayName} ! Lets get to learning </p>
+          
+          {/* Render AddLevelForm only for me !*/}
+          {user.uid === 'HFI6oa0nZcM3bZeWsvidUaMqMoi2' && <AddLevelForm currentUser={user} />}
+        </>
+      )}
     </div>
   );
+  
 };
 
 export default LevelsPage;

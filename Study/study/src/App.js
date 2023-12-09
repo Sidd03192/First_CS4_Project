@@ -56,9 +56,7 @@ function App() {
  
 
   
-  return isLoading ? (
-    <Loader />
-  ) : (
+  return (
     <div className="app">
       <BrowserRouter>
         <Header name={nombre} email={email} photo={photoURL}/>
@@ -68,7 +66,7 @@ function App() {
           <Route path="/SignUp" element={<SignUp />} />
           <Route path="/chat" element={<PrivateRoute element={<Roomz />} />} />
           <Route path="/" element={<PrivateRoute element={<Dash name={nombre}/>} />} />
-          <Route path="/learn" element={<LevelsPage />} />
+          <Route path="/learn" element={<LevelsPage name={nombre} currentUser={user}/>} />
         <Route path="/level/:levelId" element={<LevelDetailPage />} />
         </Routes>
       </BrowserRouter>

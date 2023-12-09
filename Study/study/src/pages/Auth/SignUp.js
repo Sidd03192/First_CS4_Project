@@ -1,22 +1,23 @@
 import "./Auth.css";
-import { auth, provider } from "../../firebase";
+import { auth, provider,db } from "../../firebase";
 import { signInWithPopup, onAuthStateChanged,signInWithEmailAndPassword,createUserWithEmailAndPassword } from "firebase/auth";
 import Cookies from "universal-cookie";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { doc, setDoc, collection, getDocs, query, getDoc, writeBatch,commitBatch } from 'firebase/firestore';
 
 const cookies = new Cookies();
 
 export const SignUp = (props) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(auth.currentUser);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error,setError] = useState(false);
-  const history = useNavigate(); // Add useNavigate
-  // glow effect for sign in button
- 
+  const [error, setError] = useState(false);
+  const history = useNavigate();
+
   const buttonClassName = !(email && password) ? "button-submit" : 'button-submit-glow';
-  const emptyClassName= (error)?'error':'';
+  const emptyClassName = (error) ? 'error' : '';
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (authUser) => {
       setUser(authUser);
@@ -24,31 +25,32 @@ export const SignUp = (props) => {
 
     return () => unsubscribe();
   }, []);
-  //change
+
   const signUpWithGoogle = async () => {
     try {
       console.log("Attempting Google Sign-In...");
       const result = await signInWithPopup(auth, provider);
       console.log("Google Sign-In Result:", result);
       cookies.set("auth-token", result.user.refreshToken);
-    //  props.setIsAuth(true);
-      history.goBack(); // Redirect to the previous page
+      setUser(auth.currentUser); setEmail(auth.currentUser.email);
+      await initializeUserProgress(result.user.uid, email);
 
     } catch (err) {
       console.error("Google Sign-In Error:", err.message);
     }
-
   };
-  
+
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
   };
+
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
   };
+
   const handleSignUp = async (event) => {
     event.preventDefault();
-    setError(false); // Reset error state
+    setError(false);
 
     if (email && password) {
       try {
@@ -56,14 +58,10 @@ export const SignUp = (props) => {
         const result = await createUserWithEmailAndPassword(auth, email, password);
         console.log("Email/Password Sign-Up Result:", result);
 
-       //sign in the user after successful sign-up
-       //  const signInResult = await signInWithEmailAndPassword(auth, email, password);
-       //  console.log("Email/Password Sign-In Result:", signInResult); // check if hey signed in 
+        cookies.set("auth-token", result.user.refreshToken);
+        history.goBack();
 
-        cookies.set("auth-token", result.user.refreshToken); // save them :)
-        //props.setIsAuth(true);
-        history.goBack(); // Redirect to the previous page
-
+        await initializeUserProgress(result.user.uid);
       } catch (err) {
         console.error("Email/Password Sign-Up Error:", err.message);
         setError(true);
@@ -73,16 +71,47 @@ export const SignUp = (props) => {
     }
   };
 
-      
-    
-    
+  const initializeUserProgress = async (uid, email) => {
+    try {
+      console.log("Attempting to initialize user progress");
   
+      // Get the levels data
+      const levelsQuery = query(collection(db, 'levels'));
+      const levelsSnapshot = await getDocs(levelsQuery);
+      const levelsData = levelsSnapshot.docs.map((levelDoc) => levelDoc.id);
   
-
+      // Reference to the user document
+      const userDocRef = doc(db, 'users', uid);
+  
+      // Reference to the progress subcollection
+      const progressRef = collection(userDocRef, 'progress');
+  
+      // Check if the progress subcollection already exists
+      const existingProgressSnapshot = await getDocs(progressRef);
+  
+      if (existingProgressSnapshot.empty) {
+        // If the progress subcollection doesn't exist, create it
+        await setDoc(userDocRef, { email }); // Set initial data for the user document
+  
+        // Create documents for each level in the progress subcollection
+        levelsData.forEach(async (levelName) => {
+          const levelDocRef = doc(progressRef, levelName);
+          const data = { correct: 0, total: 10 };
+          await setDoc(levelDocRef, data);
+        });
+      } else {
+        // If the progress subcollection already exists, log a message
+        console.log("Progress subcollection already exists");
+      }
+    } catch (error) {
+      console.error('Error initializing user progress:', error);
+    }
+  };
+  
     return (
       <div className="auth">
         
-      <form className="form" id="login">
+      <div className="form" >
         <div className="flex-column">
           <label>Email </label>
         </div>
@@ -215,10 +244,8 @@ export const SignUp = (props) => {
             Apple
           </button>
         </div>
-      </form>
+      </div>
       </div>
     );
     }
   
-
-

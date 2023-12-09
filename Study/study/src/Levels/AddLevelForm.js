@@ -1,109 +1,144 @@
-// AddLevelForm.jsx
-
+import "./Levels.css";
 import React, { useState, useEffect } from 'react';
-import { collection, addDoc, serverTimestamp, getDocs } from 'firebase/firestore';
-import { db } from '../firebase'; 
-import "./Levels.css"
+import { collection, addDoc, doc, setDoc, getDoc, getDocs, query, orderBy, limit } from 'firebase/firestore';
+import { db } from '../firebase'; // Update the path based on your project structure
 
 
-const AddLevelForm = ({ userId }) => {
-  const [selectedLevel, setSelectedLevel] = useState('');
-  const [newLevelName, setNewLevelName] = useState('');
+const AddLevelForm = (props) => {
+  const [levelName, setLevelName] = useState('');
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
-  const [levels, setLevels] = useState([]);
+  const [existingLevels, setExistingLevels] = useState([]);
+  const [selectedLevel, setSelectedLevel] = useState('');
 
   useEffect(() => {
+    // Fetch existing levels for the dropdown
     const fetchLevels = async () => {
       try {
-       // Assuming you have a user-specific `userId` available
-// Fetch all levels
-const levelsCollection = collection(db, 'levels');  // Assuming 'levels' is the top-level collection for all levels
-const levelsSnapshot = await getDocs(levelsCollection);
-
-const allLevelsData = levelsSnapshot.docs.map((levelDoc) => ({
-  id: levelDoc.id,
-  name: levelDoc.id, // You can use the document ID as the level name, or replace it with the actual name field if available
-}));
-
-setLevels(allLevelsData);
-
-
-
-
-   
+        const levelsQuery = query(collection(db, 'levels'));
+        const levelsSnapshot = await getDocs(levelsQuery);
+        const levelsData = levelsSnapshot.docs.map((levelDoc) => levelDoc.id); // Use levelDoc.id instead of levelDoc.data().levelName
+        setExistingLevels(levelsData);
       } catch (error) {
         console.error('Error fetching levels:', error);
       }
     };
-
+      
     fetchLevels();
-  }, [userId]);
+  }, []);
 
-  const handleAddQuestion = async (e) => {
-    e.preventDefault();
-
+  const handleAddLevel = async () => {
     try {
-      let selectedLevelId = selectedLevel;
-
-      // Check if a new level needs to be created
-      if (selectedLevel === 'new') {
-        if (!newLevelName) {
-          console.error('Please enter a name for the new level.');
-          return;
-        }
-
-        // Create a new level and get its ID
-        const newLevelRef = await addDoc(collection(db, 'levels', userId), {
-          name: newLevelName,
-          created_at: serverTimestamp(),
-        });
-        selectedLevelId = newLevelRef.id;
-
-        // Update the local levels state
-        setLevels([...levels, { id: selectedLevelId, name: newLevelName }]);
-        setNewLevelName(''); // Clear the new level name field
-      }
-
-      // Add the question and answer to the selected level's 'questions' subcollection
-      const questionsCollection = collection(db, 'levels', userId, selectedLevelId, 'questions');
-      await addDoc(questionsCollection, {
-        question,
-        answer,
-        created_at: serverTimestamp(),
+      // Add a new level to the levels collection
+      const levelDocRef = doc(db, 'levels', levelName);
+      await setDoc(levelDocRef, { levelName });
+  
+      // Create a subcollection "questions" under the new level document
+      const questionsCollectionRef = collection(levelDocRef, 'questions');
+      await addDoc(questionsCollectionRef, { name: 'question1' /* Add any initial data for question1 */ });
+  
+      // Initialize user progress for the new level
+      const usersQuery = query(collection(db, 'users'));
+      const usersSnapshot = await getDocs(usersQuery);
+      const updatePromises = [];
+  
+      // Loop through each user and initialize progress for the new level
+      usersSnapshot.forEach((userDoc) => {
+        const email = userDoc.data().email; // Get the user's email from the document
+        const userUid = userDoc.id;
+        updatePromises.push(
+          initializeUserProgress(userUid, email, levelName)
+        );
       });
+  
+      // Update user progress for the new level
+      await Promise.all(updatePromises);
+  
+      console.log('Level added successfully!');
+      setLevelName('');
+    } catch (error) {
+      console.error('Error adding level:', error);
+    }
+  };
+  
+  const initializeUserProgress = async (uid, email, levelName) => {
+    try {
+      console.log("attempting to update users levels now.")
+      const userDocRef = doc(db, 'users', uid);
+      const userProgressRef = doc(userDocRef, 'progress', levelName);
+  
+      // Initialize with correct: 0, total: 10 for the new level
+      await setDoc(
+        userProgressRef,
+        { [levelName]: { correct: 0, total: 10 } },
+        { merge: true }
+      );
+    } catch (error) {
+      console.error('Error initializing user progress:', error);
+    }
+  };
+  
+  
 
-      // Clear the form fields after submission
-      setSelectedLevel('');
-      setQuestion('');
-      setAnswer('');
+  const handleAddQuestion = async () => {
+    try {
+      // Fetch the current user's progress
+      const userDoc = await getDoc(doc(db, 'users', 'uid1')); // Replace 'uid1' with the actual user ID
+      const userProgress = userDoc.data().progress || {};
+  
+      // Specify the level name where you want to add the question
+      const levelNameToAddQuestion = selectedLevel || 'defaultLevel'; // Use a default level name if none is selected
+  
+      // Get the current progress for the specified level
+      const levelProgress = userProgress[levelNameToAddQuestion] || { correct: 0, total: 0 };
+  
+      // Add a new question to the level's subcollection
+      const questionData = {
+        question: question,
+        answer: answer,
+      };
+  
+      const questionsCollectionRef = collection(db, 'users', 'uid1', 'progress', levelNameToAddQuestion, 'questions');
+      await addDoc(questionsCollectionRef, questionData);
+  
+      // Update user progress for the specified level
+      await setDoc(doc(db, 'users', 'uid1'), {
+        progress: {
+          ...userProgress,
+          [levelNameToAddQuestion]: { ...levelProgress, total: levelProgress.total + 1 },
+        },
+      }, { merge: true });
+  
+      console.log('Question added successfully!');
     } catch (error) {
       console.error('Error adding question:', error);
     }
   };
+  
 
   return (
-    <form className="add-level-form" onSubmit={handleAddQuestion}>
+    <div className="add-level-form">
+      <h2>Add New Level</h2>
       <label>
-        Select or Create Level:
-        <select value={selectedLevel} onChange={(e) => setSelectedLevel(e.target.value)}>
-          <option value="" disabled>Select or create a level</option>
-          {levels.map((level) => (
-            <option key={level.id} value={level.id}>{`Level ${level.name}`}</option>
-          ))}
-          <option value="new">Create New Level</option>
-        </select>
+        Level Name:
+        <input type="text" value={levelName} onChange={(e) => setLevelName(e.target.value)} />
       </label>
-      {selectedLevel === 'new' && (
-        <label>
-          New Level Name:
-          <input
-            type="text"
-            value={newLevelName}
-            onChange={(e) => setNewLevelName(e.target.value)}
-          />
-        </label>
-      )}
+      <button onClick={handleAddLevel}>Add Level</button>
+
+      <h2>Add Question</h2>
+      <label>
+        Select Existing Level:
+        {existingLevels.length > 0 ? (
+          <select className="dropdown" value={selectedLevel} onChange={(e) => setSelectedLevel(e.target.value)}>
+            <option className="dropdown" value="" disabled>Select an existing level</option>
+            {existingLevels.map((level) => (
+              <option key={level} value={level}>{level}</option>
+            ))}
+          </select>
+        ) : (
+          <div>No existing levels found</div>
+        )}
+      </label>
       <label>
         Question:
         <input type="text" value={question} onChange={(e) => setQuestion(e.target.value)} />
@@ -112,10 +147,9 @@ setLevels(allLevelsData);
         Answer:
         <input type="text" value={answer} onChange={(e) => setAnswer(e.target.value)} />
       </label>
-      <button type="submit">Add Question</button>
-    </form>
+      <button onClick={handleAddQuestion}>Add Question</button>
+    </div>
   );
 };
 
 export default AddLevelForm;
-
