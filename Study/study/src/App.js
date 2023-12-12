@@ -12,6 +12,8 @@ import { Navigate } from 'react-router-dom';
 import { getAuth } from "firebase/auth";
 import LevelsPage from './Levels/Levels';
 import LevelDetailPage from './Levels/levelDetails';
+import {NextUIProvider} from "@nextui-org/react";
+
 function App() {
 
   let nombre ="";
@@ -57,6 +59,9 @@ function App() {
 
   
   return (
+    <NextUIProvider>
+
+    
     <div className="app">
       <BrowserRouter>
         <Header name={nombre} email={email} photo={photoURL}/>
@@ -71,6 +76,7 @@ function App() {
         </Routes>
       </BrowserRouter>
     </div>
+    </NextUIProvider>
   );
 
   }

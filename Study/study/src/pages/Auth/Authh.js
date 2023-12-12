@@ -13,7 +13,7 @@ export const Authh = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error,setError] = useState(false);
-  //const [alertbutton,setalertbutton]=useState(false);
+  const [alertbutton,setalertbutton]=useState(false);
   const auth = getAuth();
   const [user, setUser] = useState(auth.currentUser);
   //const navigate = useNavigate();
@@ -66,9 +66,9 @@ export const Authh = (props) => {
     {
       try {
    
-        //const result = await signInWithEmailAndPassword(auth, email, password);
-       // console.log("Email/Password Sign-In Result:", result);
-        //cookies.set("auth-token", result.user.refreshToken);
+        const result = await signInWithEmailAndPassword(auth, email, password);
+        console.log("Email/Password Sign-In Result:", result);
+        cookies.set("auth-token", result.user.refreshToken);
         props.setIsAuth(true);
 
       } catch (err) {

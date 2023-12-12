@@ -1,17 +1,21 @@
-// LevelsPage.jsx
-
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { collection, getDocs, doc, setDoc } from 'firebase/firestore';
-import { db } from '../firebase'; // Update the path based on your project structure
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../firebase';
 import { getAuth } from 'firebase/auth';
-import AddLevelForm from './AddLevelForm'; // Update the path based on your project structure
-import "./Levels.css"
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
+import CardActionArea from '@mui/material/CardActionArea';
+import AddLevelForm from './AddLevelForm';
+import {math} from "./math.jpg";
+import "./Levels.css";
+
 const LevelsPage = (props) => {
   const { levelId } = useParams();
   const [user, setUser] = useState(getAuth().currentUser);
   const [levels, setLevels] = useState([]);
-  const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
     const fetchLevels = async () => {
@@ -33,32 +37,44 @@ const LevelsPage = (props) => {
     fetchLevels();
   }, []);
 
-  
-
   return (
     <div className="level">
-      <h1>Levels</h1>
+      <h1 className='pagehead'>Levels</h1>
+    <div className='content-container'>
 
-      <ul className='levels'>
+    </div>
+      <div className="gap-2 grid grid-cols-2 sm:grid-cols-4">
         {levels.map((level) => (
-          <li key={level.id}>
-            {/* Link to the LevelDetailPage for the specific level */}
-            <Link className="levels" to={`/level/${level.id}`}>{`Level ${level.id}`}</Link>
-          </li>
+          <Card key={level.id} sx={{ maxWidth: 270, maxHeight:350 }}>
+            <CardActionArea component={Link} to={`/level/${level.id}`}>
+              <CardMedia
+                component="img"
+                height="100"
+                image={"https://img.freepik.com/free-vector/math-chalkboard-background_23-2148172795.jpg"} 
+                alt={`Level ${level.id}`}
+                style={{ maxHeight: '100%' }}
+
+              />
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                  {`${level.id}`}
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
         ))}
-      </ul>
+        
+      </div>
 
       {user && (
         <>
-          <p>Hi {user.displayName} ! Lets get to learning </p>
-          
-          {/* Render AddLevelForm only for me !*/}
+          <p>Hi {user.displayName}! Let's get to learning</p>
+          {/* Render AddLevelForm only for me! */}
           {user.uid === 'HFI6oa0nZcM3bZeWsvidUaMqMoi2' && <AddLevelForm currentUser={user} />}
         </>
       )}
     </div>
   );
-  
 };
 
 export default LevelsPage;

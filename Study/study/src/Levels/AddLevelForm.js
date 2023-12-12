@@ -1,10 +1,10 @@
-import "./Levels.css";
 import React, { useState, useEffect } from 'react';
-import { collection, addDoc, doc, setDoc, getDoc, getDocs, query, orderBy, limit } from 'firebase/firestore';
-import { db } from '../firebase'; // Update the path based on your project structure
+import { Button } from "@nextui-org/react";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@nextui-org/react";
+import { Input } from "@nextui-org/react";
+import {Select, SelectSection, SelectItem} from "@nextui-org/react";
 
-
-const AddLevelForm = (props) => {
+const AddLevelForm = () => {
   const [levelName, setLevelName] = useState('');
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
@@ -15,140 +15,90 @@ const AddLevelForm = (props) => {
     // Fetch existing levels for the dropdown
     const fetchLevels = async () => {
       try {
-        const levelsQuery = query(collection(db, 'levels'));
-        const levelsSnapshot = await getDocs(levelsQuery);
-        const levelsData = levelsSnapshot.docs.map((levelDoc) => levelDoc.id); // Use levelDoc.id instead of levelDoc.data().levelName
+        // Replace this with your actual logic to fetch existing levels
+        const levelsData = ['Level 1', 'Level 2', 'Level 3']; 
         setExistingLevels(levelsData);
       } catch (error) {
         console.error('Error fetching levels:', error);
       }
     };
-      
+
     fetchLevels();
   }, []);
 
   const handleAddLevel = async () => {
-    try {
-      // Add a new level to the levels collection
-      const levelDocRef = doc(db, 'levels', levelName);
-      await setDoc(levelDocRef, { levelName });
-  
-      // Create a subcollection "questions" under the new level document
-      const questionsCollectionRef = collection(levelDocRef, 'questions');
-      await addDoc(questionsCollectionRef, { name: 'question1' /* Add any initial data for question1 */ });
-  
-      // Initialize user progress for the new level
-      const usersQuery = query(collection(db, 'users'));
-      const usersSnapshot = await getDocs(usersQuery);
-      const updatePromises = [];
-  
-      // Loop through each user and initialize progress for the new level
-      usersSnapshot.forEach((userDoc) => {
-        const email = userDoc.data().email; // Get the user's email from the document
-        const userUid = userDoc.id;
-        updatePromises.push(
-          initializeUserProgress(userUid, email, levelName)
-        );
-      });
-  
-      // Update user progress for the new level
-      await Promise.all(updatePromises);
-  
-      console.log('Level added successfully!');
-      setLevelName('');
-    } catch (error) {
-      console.error('Error adding level:', error);
-    }
+    // Add your logic to handle adding a level
   };
-  
-  const initializeUserProgress = async (uid, email, levelName) => {
-    try {
-      console.log("attempting to update users levels now.")
-      const userDocRef = doc(db, 'users', uid);
-      const userProgressRef = doc(userDocRef, 'progress', levelName);
-  
-      // Initialize with correct: 0, total: 10 for the new level
-      await setDoc(
-        userProgressRef,
-        { [levelName]: { correct: 0, total: 10 } },
-        { merge: true }
-      );
-    } catch (error) {
-      console.error('Error initializing user progress:', error);
-    }
-  };
-  
-  
 
   const handleAddQuestion = async () => {
-    try {
-      // Fetch the current user's progress
-      const userDoc = await getDoc(doc(db, 'users', 'uid1')); // Replace 'uid1' with the actual user ID
-      const userProgress = userDoc.data().progress || {};
-  
-      // Specify the level name where you want to add the question
-      const levelNameToAddQuestion = selectedLevel || 'defaultLevel'; // Use a default level name if none is selected
-  
-      // Get the current progress for the specified level
-      const levelProgress = userProgress[levelNameToAddQuestion] || { correct: 0, total: 0 };
-  
-      // Add a new question to the level's subcollection
-      const questionData = {
-        question: question,
-        answer: answer,
-      };
-  
-      const questionsCollectionRef = collection(db, 'users', 'uid1', 'progress', levelNameToAddQuestion, 'questions');
-      await addDoc(questionsCollectionRef, questionData);
-  
-      // Update user progress for the specified level
-      await setDoc(doc(db, 'users', 'uid1'), {
-        progress: {
-          ...userProgress,
-          [levelNameToAddQuestion]: { ...levelProgress, total: levelProgress.total + 1 },
-        },
-      }, { merge: true });
-  
-      console.log('Question added successfully!');
-    } catch (error) {
-      console.error('Error adding question:', error);
-    }
+    // Add your logic to handle adding a question
   };
-  
 
   return (
-    <div className="add-level-form">
-      <h2>Add New Level</h2>
-      <label>
-        Level Name:
-        <input type="text" value={levelName} onChange={(e) => setLevelName(e.target.value)} />
-      </label>
-      <button onClick={handleAddLevel}>Add Level</button>
-
-      <h2>Add Question</h2>
-      <label>
-        Select Existing Level:
-        {existingLevels.length > 0 ? (
-          <select className="dropdown" value={selectedLevel} onChange={(e) => setSelectedLevel(e.target.value)}>
-            <option className="dropdown" value="" disabled>Select an existing level</option>
-            {existingLevels.map((level) => (
-              <option key={level} value={level}>{level}</option>
-            ))}
-          </select>
-        ) : (
-          <div>No existing levels found</div>
-        )}
-      </label>
-      <label>
-        Question:
-        <input type="text" value={question} onChange={(e) => setQuestion(e.target.value)} />
-      </label>
-      <label>
-        Answer:
-        <input type="text" value={answer} onChange={(e) => setAnswer(e.target.value)} />
-      </label>
-      <button onClick={handleAddQuestion}>Add Question</button>
-    </div>
+    <Card shadow="sm" className="w-[350px]">
+      <CardHeader>
+        <CardTitle>Add New Level</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <form>
+          <div className="grid gap-4">
+            <div className="flex flex-col space-y-1.5">
+              <label htmlFor="levelName">Level Name</label>
+              <Input
+                id="levelName"
+                placeholder="Enter level name"
+                value={levelName}
+                onChange={(e) => setLevelName(e.target.value)}
+              />
+            </div>
+            <Button variant="contained" onClick={handleAddLevel}>
+              Add Level
+            </Button>
+          </div>
+        </form>
+        <hr className="my-4" />
+        <form>
+          <div className="grid gap-4">
+            <div className="flex flex-col space-y-1.5">
+              <label htmlFor="existingLevel">Select Existing Level</label>
+              <Select>
+                <SelectTrigger id="existingLevel">
+                  <SelectValue>{selectedLevel || 'Select an existing level'}</SelectValue>
+                </SelectTrigger>
+                <SelectContent position="popper">
+                  {existingLevels.map((level) => (
+                    <SelectItem key={level} value={level} onClick={() => setSelectedLevel(level)}>
+                      {level}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex flex-col space-y-1.5">
+              <label htmlFor="question">Question</label>
+              <Input
+                id="question"
+                placeholder="Enter question"
+                value={question}
+                onChange={(e) => setQuestion(e.target.value)}
+              />
+            </div>
+            <div className="flex flex-col space-y-1.5">
+              <label htmlFor="answer">Answer</label>
+              <Input
+                id="answer"
+                placeholder="Enter answer"
+                value={answer}
+                onChange={(e) => setAnswer(e.target.value)}
+              />
+            </div>
+            <Button variant="contained" onClick={handleAddQuestion}>
+              Add Question
+            </Button>
+          </div>
+        </form>
+      </CardContent>
+    </Card>
   );
 };
 

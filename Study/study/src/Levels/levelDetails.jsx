@@ -1,7 +1,8 @@
 // LevelDetailPage.jsx
+import 'semantic-ui-css/semantic.min.css';
 import ConfettiExplosion from 'react-confetti-explosion';
 import TextField from '@mui/material/TextField';
-import { Progress } from 'semantic-ui-react'
+import { Progress } from 'semantic-ui-react';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import {
@@ -13,7 +14,7 @@ import {
 } from 'firebase/firestore';
 import { db } from '../firebase';
 import { getAuth } from 'firebase/auth';
-import { Alert, Button } from '@mui/material';
+import { Alert, Button,AlertTitle } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import './Levels.css';
 
@@ -119,7 +120,9 @@ const navigate = useNavigate();
               if (currentQuestionIndex + 1 < questions.length) {
                 setUserProgress(userProgress + 1);
               } else {
+                setUserProgress(userProgress + 1);
                 setShowCompletionAlert(true);
+
               }
             }, 1000);
           }, 1000);
@@ -163,9 +166,18 @@ const navigate = useNavigate();
 
 
   return (
-    <div className='currentquestion'>
+    <div className='all'>
+     
+           
+
+      <div className='currentquestion'>
+      <div className='alerts'>
+      {showErrorAlert && <Alert className='Alert' variant='filled' severity="error">   <AlertTitle> Wrong Answer</AlertTitle>
+Please try again.</Alert>}
+            {showAlert && <Alert variant='filled'severity="success">  <AlertTitle>Correct Answer</AlertTitle>
+Great Job !!</Alert>}
+      </div>
       {/* Show confetti when isConfettiActive is true */}
-      {showAlert && <Alert severity="success">Great Job !!</Alert>}
       {isConfettiActive && <ConfettiExplosion /> }
 
       
@@ -184,7 +196,6 @@ const navigate = useNavigate();
           <button onClick={resetProgress} className="button type1"> </button>
         </div>
       )}
-      {showErrorAlert && <Alert severity="error">Incorrect answer. Please try again.</Alert>}
 
       <h1 className='thislevel'>{currentLevel && `${currentLevel.id}`}</h1>
       {user && (
@@ -218,9 +229,11 @@ const navigate = useNavigate();
         </div>
       )}
 
-      <Progress className="progressbar" percent={(userProgress/questions.length)*100 +5} indicating />
-
+<Progress className="progressbar" percent={(userProgress / questions.length) * 100 + 5} indicating />
+            <progress value={100} max={100}/>
     </div>
+    </div>
+    
   );
 };
 
