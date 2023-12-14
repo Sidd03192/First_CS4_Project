@@ -1,6 +1,6 @@
 import "./Auth.css";
 import { auth, provider,db } from "../../firebase";
-import { signInWithPopup, onAuthStateChanged,signInWithEmailAndPassword,createUserWithEmailAndPassword } from "firebase/auth";
+import { signInWithPopup, onAuthStateChanged,signInWithEmailAndPassword,createUserWithEmailAndPassword,sendEmailVerification } from "firebase/auth";
 import Cookies from "universal-cookie";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -51,16 +51,20 @@ export const SignUp = (props) => {
   const handleSignUp = async (event) => {
     event.preventDefault();
     setError(false);
-
+  
     if (email && password) {
       try {
         console.log("Attempting Email/Password Sign-Up...");
         const result = await createUserWithEmailAndPassword(auth, email, password);
         console.log("Email/Password Sign-Up Result:", result);
-
+  
+        // Send email verification
+        await sendEmailVerification(result.user);
+        alert("please verify your email!")
+        // Set auth token
         cookies.set("auth-token", result.user.refreshToken);
-        history.goBack();
-
+  
+        // Initialize user progress
         await initializeUserProgress(result.user.uid);
       } catch (err) {
         console.error("Email/Password Sign-Up Error:", err.message);
@@ -70,7 +74,7 @@ export const SignUp = (props) => {
       setError(true);
     }
   };
-
+  
   const initializeUserProgress = async (uid, email) => {
     try {
       console.log("Attempting to initialize user progress");

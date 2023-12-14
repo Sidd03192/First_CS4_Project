@@ -5,7 +5,6 @@ export const Loader = () => {
   return (
     <div className="loader">
       <div className="svg-wrapper">
-        {/* copy svg image and past it here */}
         <svg
           height="80"
           viewBox="0 0 196 313"
@@ -16,9 +15,7 @@ export const Loader = () => {
           <defs>
             <linearGradient id="ttb" y2="1">
 
-                {/* if you are thinking how it is animating 
-                    we have added animation to svg here 
-                */}
+            
 
               <stop offset="100%" stopOpacity="1" stopColor="#333">
                 <animate
@@ -41,7 +38,6 @@ export const Loader = () => {
                 />
               </stop>
               
-              {/* end */}
 
             </linearGradient>
           </defs>

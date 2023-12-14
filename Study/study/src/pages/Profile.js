@@ -41,7 +41,7 @@ console.log(props.name +"in profile");
       <div className='profile'>
         <div className='menu-container'>
           <div className='menu-trigger'>
-            <img onClick={toggle} src={Login} alt={Login} />
+            <img onClick={toggle} src={Login} alt={Login} className='loginglow'/>
           </div>
           <div className={`dropdown-menu ${open ? 'active' : 'inactive'}`} ref={menuRef}>
             <ul>

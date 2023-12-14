@@ -366,3 +366,10 @@ p {
   width: 100%;
   z-index: 20;
 }
+
+
+.currentquestion{
+  justify-content: center;
+  text-align: center;
+  left: 50%;
+}

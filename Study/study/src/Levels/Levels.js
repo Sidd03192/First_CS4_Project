@@ -10,6 +10,7 @@ import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
 import AddLevelForm from './AddLevelForm';
 import {math} from "./math.jpg";
+import Rating from '@mui/material/Rating';
 import "./Levels.css";
 
 const LevelsPage = (props) => {
@@ -58,6 +59,7 @@ const LevelsPage = (props) => {
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
                   {`${level.id}`}
+                  
                 </Typography>
               </CardContent>
             </CardActionArea>

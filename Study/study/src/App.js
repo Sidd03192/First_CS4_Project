@@ -13,7 +13,7 @@ import { getAuth } from "firebase/auth";
 import LevelsPage from './Levels/Levels';
 import LevelDetailPage from './Levels/levelDetails';
 import {NextUIProvider} from "@nextui-org/react";
-
+import { Todo } from './components/Todo';
 function App() {
 
   let nombre ="";
@@ -43,18 +43,19 @@ function App() {
   }, []);
 
   const PrivateRoute = ({ element, ...props }) => {
-    if ( isAuth)
-    {
+    console.log('PrivateRoute - Checking authentication status');
+    
+    if (isAuth) {
+      console.log('PrivateRoute - User is authenticated, rendering element');
       return element;
+    } else {
+      console.log('PrivateRoute - User is not authenticated, showing alert');
+      alert('Please sign in first :)');
+      console.log('PrivateRoute - Navigating to /auth');
+      return <Navigate to="/auth" />;
     }
-    else{
-      alert("please sign in first :)");
-      return <Navigate to="/auth"/>
-    }
-  
-
-    // put error message 
   };
+  
  
 
   
@@ -63,8 +64,10 @@ function App() {
 
     
     <div className="app">
+      
       <BrowserRouter>
         <Header name={nombre} email={email} photo={photoURL}/>
+        
         <Routes>
           <Route path="/about" element={<About />} />
           <Route path="/auth" element={<Authh />} />

@@ -1,7 +1,7 @@
 import "./Auth.css";
 import { Alert } from '@mui/material';
 import { auth, provider } from "../../firebase";
-import {  onAuthStateChanged,signInWithEmailAndPassword,createUserWithEmailAndPassword, signInWithPopup} from "firebase/auth";
+import {  onAuthStateChanged,signInWithEmailAndPassword,createUserWithEmailAndPassword, signInWithPopup,sendEmailVerification} from "firebase/auth";
 import Cookies from "universal-cookie";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -25,7 +25,7 @@ export const Authh = (props) => {
   // glow effect for sign in button
   }
   const buttonClassName = !(email && password) ? "button-submit" : 'button-submit-glow';
-  const emptyClassName= (error)?'error':'';
+  const emptyClassName= (error)?'error':'blank';
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (authUser) => {
       setUser(authUser);
@@ -62,27 +62,29 @@ export const Authh = (props) => {
   };
   const handleSignIn = async (event) => {
     event.preventDefault();
-    if (email&&password)
-    {
+    if (email && password) {
       try {
-   
         const result = await signInWithEmailAndPassword(auth, email, password);
         console.log("Email/Password Sign-In Result:", result);
-        cookies.set("auth-token", result.user.refreshToken);
-        props.setIsAuth(true);
-
+  
+        // Check if the user's email is verified
+        if (result.user.emailVerified) {
+          cookies.set("auth-token", result.user.refreshToken);
+          props.setIsAuth(true);
+        } else {
+          console.log("Email is not verified. Sending verification email...");
+          await sendEmailVerification(result.user);
+          setError(true); // Set an error state or show a message to inform the user
+        }
       } catch (err) {
         console.error("Email/Password Sign-In Error:", err.message);
       }
-    }
-    else{
-      console.log("sign in with email and password error");
+    } else {
+      console.log("Sign in with email and password error");
       setError(true);
     }
-      
-    
-    
   };
+  
   
 
     return (
