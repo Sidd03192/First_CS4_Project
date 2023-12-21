@@ -72,7 +72,7 @@ export const Header = (props) => {
             <Tooltip title="learn" arrow>
             <ul>
                 <li>
-                <Link to="/learn"> Questions </Link>
+                <Link to="/learn"> Practice </Link>
                 </li>
             </ul>
             </Tooltip>

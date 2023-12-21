@@ -230,7 +230,6 @@ Great Job !!</Alert>}
       )}
 
 <Progress className="progressbar" percent={(userProgress / questions.length) * 100 + 5} indicating />
-            <progress value={100} max={100}/>
     </div>
     </div>
     
