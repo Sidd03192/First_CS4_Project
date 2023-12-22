@@ -17,6 +17,8 @@ import { getAuth } from 'firebase/auth';
 import { Alert, Button,AlertTitle } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import './Levels.css';
+import { ChatGPT } from '../server';
+
 
 const LevelDetailPage = () => {
   const { levelId } = useParams();
@@ -28,8 +30,14 @@ const LevelDetailPage = () => {
   const [showCompletionAlert, setShowCompletionAlert] = useState(false);
   const [showErrorAlert, setShowErrorAlert] = useState(false);
   const [isConfettiActive, setIsConfettiActive] = useState(false);
+  const[curquest, setCurrQuest]=useState("");
+  const [incorrectAttempts, setIncorrectAttempts] = useState(0);
+  const [showChatGPT, setShowChatGPT] = useState(false);
 
-const navigate = useNavigate();
+
+
+
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchLevels = async () => {
       try {
@@ -88,12 +96,16 @@ const navigate = useNavigate();
   };
   const currentLevel = levels.find((level) => level.id === levelId);
   const currentQuestionIndex = userProgress;
+  const que = questions[currentQuestionIndex];
+
+
 
   const handleAnswer = async (userAnswer) => {
     try {
       const currentQuestion = questions[currentQuestionIndex];
 
-      const isCorrect = userAnswer === currentQuestion.answer;
+    const isCorrect = userAnswer === currentQuestion.answer;
+      console.log(currentQuestion.answer);
 
       if (isCorrect) {
         if (user) {
@@ -128,6 +140,17 @@ const navigate = useNavigate();
           }, 1000);
         }
       } else {
+        setIncorrectAttempts(incorrectAttempts + 1);
+  
+        // Show ChatGPT after 2 incorrect attempts
+        if (incorrectAttempts + 1 >= 2) {
+          // Reset incorrect attempts for the next question
+          setIncorrectAttempts(0);
+  
+          // Display ChatGPT
+          setShowChatGPT(true);
+        }
+  
         setShowErrorAlert(true);
         setTimeout(() => {
           setShowErrorAlert(false);
@@ -137,22 +160,23 @@ const navigate = useNavigate();
     } catch (error) {
       console.error('Error handling answer:', error);
     }
+
   };
 
   const resetProgress = async () => {
     console.log("Attempting to reset progress");
-
+  
     try {
       if (user) {
         const userRef = doc(db, 'users', user.uid);
         const levelProgressRef = doc(userRef, 'progress', levelId);
-
+  
         // Reset the user's progress for the current level to 0
         await setDoc(levelProgressRef, { correct: 0 });
-
+  
         // Fetch the updated progress to ensure it's reflected immediately
         await fetchUserProgress();
-
+  
         // Refresh the screen to start the user back on question 1
         window.location.reload();
       }
@@ -160,14 +184,14 @@ const navigate = useNavigate();
       console.error('Error resetting progress:', error);
     }
   };
-
-
+  
 
 
 
   return (
     <div className='all'>
-     
+       
+
            
 
       <div className='currentquestion'>
@@ -226,11 +250,15 @@ Great Job !!</Alert>}
           <button className="answerbutton" onClick={() => handleAnswer(questions[userProgress].userAnswer)}>
             Submit Answer
           </button>
+          
         </div>
       )}
 
 <Progress className="progressbar" percent={(userProgress / questions.length) * 100 + 5} indicating />
     </div>
+    {showChatGPT && (
+        <ChatGPT ca={questions[userProgress].question} />
+      )}
     </div>
     
   );

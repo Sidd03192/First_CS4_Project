@@ -72,7 +72,7 @@ const LevelsPage = (props) => {
         <>
           <p>Hi {user.displayName}! Let's get to learning</p>
           {/* Render AddLevelForm only for me! */}
-          {user.uid === 'HFI6oa0nZcM3bZeWsvidUaMqMoi2' && <AddLevelForm currentUser={user} />}
+           <AddLevelForm currentUser={user} />
         </>
       )}
     </div>

@@ -3,6 +3,7 @@ import { Authh } from './Auth/Authh';
 import { motion } from 'framer-motion';
 import { Schedule } from '../components/scheduler/schedule';
 import { Todo } from '../components/Todo';
+import { ChatGPT } from '../server';
 import '../styles/dash.css';
 
 export const Dash = (props) => {
@@ -15,6 +16,7 @@ export const Dash = (props) => {
 
         <div className="schedule">
           <Todo />
+     
         </div>
       </div>
     </div>
