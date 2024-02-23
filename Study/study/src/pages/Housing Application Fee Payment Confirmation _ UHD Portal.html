@@ -1,0 +1,481 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+
+
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="UHD Portal" />
+
+	<!-- script must be first script -->
+	<script src="https://browser.sentry-cdn.com/7.12.1/bundle.tracing.min.js"
+			integrity="sha384-+5SuXMl3TMl8hMxuOnzV/WA9uCrxgqfg5AeYcRa3Xgt5+IicBBuHRUoYgHU741xO"
+			crossorigin="anonymous"></script>
+
+	<script>
+		Sentry.onLoad(function () {
+			Sentry.init({
+				dsn: "https://f331552244b14007ad424399d5991fe3@o296193.ingest.sentry.io/6717479",
+				release: "px@10.9.66.55609",
+				environment: "Production",
+				integrations: [new Sentry.BrowserTracing()],
+				tracesSampleRate: 0.0
+			});
+		});
+	</script>
+
+<meta content="website" property="og:type" />
+<meta content="Housing Application Fee Payment Confirmation" property="og:title" />
+<meta content="UHD Portal" property="og:site_name" />
+<meta content="The UHD Housing Portal provides students with everything they need to manage their housing applications and other related services at the University of Texas at Austin." property="og:description" />
+<meta content="/StarRezPortalX/PortalX/SiteLogo" property="og:image" />
+
+		<title>Housing Application Fee Payment Confirmation | UHD Portal</title>
+
+	<link href="/StarRezPortalX/Content/Theme/20230727_100522_fav-icon.png/4?" rel="shortcut icon" />
+	<script src="//cdnjs.cloudflare.com/ajax/libs/d3/4.7.2/d3.min.js"></script>
+
+	<link href="https://starrezcloudcdn.azureedge.net/10.9.66.55609/portalx/content/jquery-ui/1.13.2/jquery-ui.min.css?v=10.9.66.55609" rel="Stylesheet" type="text/css" />
+<link href="https://starrezcloudcdn.azureedge.net/10.9.66.55609/portalx/content/jquery-ui/1.13.2/jquery-ui.theme.min.css?v=10.9.66.55609" rel="Stylesheet" type="text/css" />
+<link href="https://starrezcloudcdn.azureedge.net/10.9.66.55609/portalx/content/jquery/plugins/spectrum.css?v=10.9.66.55609" rel="Stylesheet" type="text/css" />
+<link href="https://starrezcloudcdn.azureedge.net/10.9.66.55609/portalx/content/colorbox/colorbox.css?v=10.9.66.55609" rel="Stylesheet" type="text/css" />
+<link href="https://starrezcloudcdn.azureedge.net/10.9.66.55609/portalx/content/font-awesome/font-awesome.min.css?v=10.9.66.55609" rel="Stylesheet" type="text/css" />
+<link href="https://starrezcloudcdn.azureedge.net/10.9.66.55609/portalx/scripts/common/simplemde/css/sr.simplemde.min.css?v=10.9.66.55609" rel="Stylesheet" type="text/css" />
+<link href="https://starrezcloudcdn.azureedge.net/10.9.66.55609/portalx/content/jquery/fullcalendar/fullcalendar.min.css?v=10.9.66.55609" rel="Stylesheet" type="text/css" />
+<link href="https://starrezcloudcdn.azureedge.net/10.9.66.55609/portalx/content/jquery/time.css?v=10.9.66.55609" rel="Stylesheet" type="text/css" />
+<link href="https://starrezcloudcdn.azureedge.net/10.9.66.55609/portalx/scripts/common/photo-sphere-viewer/photo-sphere-viewer.min.css?v=10.9.66.55609" rel="Stylesheet" type="text/css" />
+<link href="https://starrezcloudcdn.azureedge.net/10.9.66.55609/portalx/scripts/starrezcalendar/starrezcalendar.css?v=10.9.66.55609" rel="Stylesheet" type="text/css" />
+<link href="https://starrezcloudcdn.azureedge.net/10.9.66.55609/portalx/content/css/starrez.desktop.min.css?v=10.9.66.55609" rel="Stylesheet" type="text/css" />
+
+	<script src="https://starrezcloudcdn.azureedge.net/10.9.66.55609/portalx/content/jquery/jquery-3.5.1.min.js?v=10.9.66.55609" type="text/javascript"></script>
+<script src="https://starrezcloudcdn.azureedge.net/10.9.66.55609/portalx/scripts/common/modernizr.min.js?v=10.9.66.55609" type="text/javascript"></script>
+<script src="https://starrezcloudcdn.azureedge.net/10.9.66.55609/portalx/content/jquery-ui/1.13.2/jquery-ui.min.js?v=10.9.66.55609" type="text/javascript"></script>
+<script src="https://starrezcloudcdn.azureedge.net/10.9.66.55609/portalx/content/jquery/plugins/copycss/jquery.copycss.js?v=10.9.66.55609" type="text/javascript"></script>
+<script src="https://starrezcloudcdn.azureedge.net/10.9.66.55609/portalx/content/jsplumb/js/jquery.jsplumb-2.0.5.js?v=10.9.66.55609" type="text/javascript"></script>
+<script src="https://starrezcloudcdn.azureedge.net/10.9.66.55609/portalx/content/colorbox/jquery.colorbox.min.js?v=10.9.66.55609" type="text/javascript"></script>
+<script src="https://starrezcloudcdn.azureedge.net/10.9.66.55609/portalx/scripts/common/ckeditor-4.23.0/ckeditor.js?v=10.9.66.55609" type="text/javascript"></script>
+<script src="https://starrezcloudcdn.azureedge.net/10.9.66.55609/portalx/scripts/common/jquery.tablesorterv2.min.js?v=10.9.66.55609" type="text/javascript"></script>
+<script src="https://starrezcloudcdn.azureedge.net/10.9.66.55609/portalx/scripts/common/jquery.tablesorter.min.js?v=10.9.66.55609" type="text/javascript"></script>
+<script src="https://starrezcloudcdn.azureedge.net/10.9.66.55609/portalx/scripts/common/jquery.metadata.min.js?v=10.9.66.55609" type="text/javascript"></script>
+<script src="https://starrezcloudcdn.azureedge.net/10.9.66.55609/portalx/scripts/common/jquery.scrollto.min.js?v=10.9.66.55609" type="text/javascript"></script>
+<script src="https://starrezcloudcdn.azureedge.net/10.9.66.55609/portalx/scripts/common/codemirror-6.65.7/codemirror.min.js?v=10.9.66.55609" type="text/javascript"></script>
+<script src="https://starrezcloudcdn.azureedge.net/10.9.66.55609/portalx/scripts/common/simplemde/js/sr.simplemde.min.js?v=10.9.66.55609" type="text/javascript"></script>
+<script src="https://starrezcloudcdn.azureedge.net/10.9.66.55609/portalx/scripts/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js?v=10.9.66.55609" type="text/javascript"></script>
+<script src="https://starrezcloudcdn.azureedge.net/10.9.66.55609/portalx/scripts/starrezcalendar/starrezcalendar.js?v=10.9.66.55609" type="text/javascript"></script>
+<script src="https://starrezcloudcdn.azureedge.net/10.9.66.55609/portalx/scripts/common/photo-sphere-viewer/dot.min.js?v=10.9.66.55609" type="text/javascript"></script>
+<script src="https://starrezcloudcdn.azureedge.net/10.9.66.55609/portalx/scripts/common/photo-sphere-viewer/uevent.min.js?v=10.9.66.55609" type="text/javascript"></script>
+<script src="https://starrezcloudcdn.azureedge.net/10.9.66.55609/portalx/scripts/common/photo-sphere-viewer/d.min.js?v=10.9.66.55609" type="text/javascript"></script>
+<script src="https://starrezcloudcdn.azureedge.net/10.9.66.55609/portalx/scripts/common/photo-sphere-viewer/three.min.js?v=10.9.66.55609" type="text/javascript"></script>
+<script src="https://starrezcloudcdn.azureedge.net/10.9.66.55609/portalx/scripts/common/photo-sphere-viewer/deviceorientationcontrols.js?v=10.9.66.55609" type="text/javascript"></script>
+<script src="https://starrezcloudcdn.azureedge.net/10.9.66.55609/portalx/scripts/common/photo-sphere-viewer/projector.js?v=10.9.66.55609" type="text/javascript"></script>
+<script src="https://starrezcloudcdn.azureedge.net/10.9.66.55609/portalx/scripts/common/photo-sphere-viewer/canvasrenderer.js?v=10.9.66.55609" type="text/javascript"></script>
+<script src="https://starrezcloudcdn.azureedge.net/10.9.66.55609/portalx/scripts/common/photo-sphere-viewer/photo-sphere-viewer.js?v=10.9.66.55609" type="text/javascript"></script>
+<script src="https://starrezcloudcdn.azureedge.net/10.9.66.55609/portalx/scripts/common/moment.min.js?v=10.9.66.55609" type="text/javascript"></script>
+<script src="https://starrezcloudcdn.azureedge.net/10.9.66.55609/portalx/scripts/fullcalendar/fullcalendar.min.js?v=10.9.66.55609" type="text/javascript"></script>
+<script src="https://starrezcloudcdn.azureedge.net/10.9.66.55609/portalx/scripts/common/html2canvas.min.js?v=10.9.66.55609" type="text/javascript"></script>
+<script src="https://starrezcloudcdn.azureedge.net/10.9.66.55609/portalx/scripts/common/colorpicker/jquery.colorpicker.min.js?v=10.9.66.55609" type="text/javascript"></script>
+<script src="https://starrezcloudcdn.azureedge.net/10.9.66.55609/portalx/scripts/d3.min.js?v=10.9.66.55609" type="text/javascript"></script>
+<script src="https://starrezcloudcdn.azureedge.net/10.9.66.55609/portalx/scripts/d3pie.min.js?v=10.9.66.55609" type="text/javascript"></script>
+<script src="https://starrezcloudcdn.azureedge.net/10.9.66.55609/portalx/scripts/dropdown/w3-dropdown.js?v=10.9.66.55609" type="text/javascript"></script>
+<script src="https://starrezcloudcdn.azureedge.net/10.9.66.55609/portalx/scripts/common/jquery.ui.timepicker.min.js?v=10.9.66.55609" type="text/javascript"></script>
+<script src="https://starrezcloudcdn.azureedge.net/10.9.66.55609/portalx/scripts/common/spectrum.min.js?v=10.9.66.55609" type="text/javascript"></script>
+<script src="https://starrezcloudcdn.azureedge.net/10.9.66.55609/portalx/scripts/common/jquery.readmore.min.js?v=10.9.66.55609" type="text/javascript"></script>
+<script src="https://starrezcloudcdn.azureedge.net/10.9.66.55609/portalx/scripts/starrez.portalx.min.js?v=10.9.66.55609" type="text/javascript"></script>
+<script src="/StarRezPortalX/File/GetAllJs?v=10.9.66.55609" type="text/javascript"></script>
+
+
+	<link href="/StarRezPortalX/PortalX/GetThemeCss?previewPortalThemeID=4&amp;previewTheme=False&amp;v=10.9.66.55609" rel="Stylesheet" type="text/css" />
+
+
+
+
+	<script>
+		$(function () {
+			portal.Initialise({"BaseUrl":"/StarRezPortalX","IsDebug":false,"LongDateFormat":"ddd, MMM D, YYYY","ShortDateFormat":"M/D/YYYY","Use24HourTime":true,"TimeFormat":"HH:mm","TimeFormatWithSeconds":"HH:mm:ss","MaxFileSizeMB":4,"MaxFileSizeBytes":4194304,"AutoLoadStarCareHelpResults":true,"CustomHeader":null,"PortalxLandmarkRegionChanges":false,"PortalXFormControls":false}, {"PXAccessibleTableHeaderButton":false,"PortalxLandmarkRegionChanges":false,"AccessibleSearchCardFocusOnPageMove":true,"PortalXFormControls":false,"PXAccessibilityEnableSemanticDisputableTransactionsTables":true,"PXAccessibilityEnableSemanticRoomMaintenanceTables":true,"PXAccessibleFilterGroupSystem":false});
+		});
+	</script>
+
+
+	
+    
+	<script type="text/javascript">
+		portal.editor.IsInLiveEditMode = false;
+	</script>
+
+
+
+
+
+
+
+
+
+
+<!-- Pendo -->
+<script>
+
+	(function(apiKey){
+		const localName = "__portalx__machine__guid__";
+		let localGuid = "UNKNOWN";
+
+		function buildGuid() {
+			return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
+			(
+				c ^
+				(crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
+				).toString(16)
+			);
+		}
+
+		try {
+			localGuid = window.localStorage.getItem(localName);
+			if (!localGuid) {
+				localGuid = buildGuid();
+				window.localStorage.setItem(localName, localGuid);
+			}
+		} catch (err) {
+			console.error(err)
+		}
+
+		(function(p,e,n,d,o){var v,w,x,y,z;o=p[d]=p[d]||{};o._q=o._q||[];
+			v=['initialize','identify','updateOptions','pageLoad','track'];for(w=0,x=v.length;w<x;++w)(function(m){
+			o[m]=o[m]||function(){o._q[m===v[0]?'unshift':'push']([m].concat([].slice.call(arguments,0)));};})(v[w]);
+			y=e.createElement(n);y.async=!0;y.src='https://cdn.eu.pendo.io/agent/static/'+apiKey+'/pendo.js';
+			z=e.getElementsByTagName(n)[0];z.parentNode.insertBefore(y,z);})(window,document,'script','pendo');
+
+			pendo.initialize({
+				visitor: {
+					id: `956847_UTAUSTIN`,
+					first_name: `SIDDHARTH`,
+					product: `PortalX`,
+					guid: localGuid,
+					admin_user: `No Linked Admin`
+				},
+
+				account: {
+					id: `UTAUSTIN_Production`,
+					external_id: `694209c7-e16b-4c09-a2c2-7cec0bcab0e7`,
+					name: `UTAUSTIN`,
+					monthly_value: `12000`,
+					environment: `Production`,
+					sr_version: `10.9.66`
+				}
+			});
+		})
+	('a7fbac82-d5b6-4256-69ed-a261d430aa3f');
+</script>
+<!-- Pendo -->
+			
+</head>
+
+
+
+<body id="original-landmarks" data-application="portal" class="">
+
+
+		<div class="portalx content">
+			<a class="skip-to-content-link " href="#main-content" tabindex="1">Skip to content</a>
+			<!-- theme layout - from here -->
+			
+
+
+
+    <header class="ui-page-header">
+        <div id="starshine_container" class="container">
+            
+	
+
+
+	<a class="nav-item" href="/StarRezPortalX/" aria-label="Back To Home Page">
+		<div role="presentation" class="logo"></div>
+	</a>
+
+<h1>UHD Portal</h1>
+
+        </div>
+    </header>
+    <nav>
+        <div class="menu ui-menu">
+            
+	
+
+
+<div class="ui-navigation-bar-container navigation-bar-container-restructuctured" id="851a1dbe31d54cdf92beaeff210a41e7">		<nav class="nav-bar ui-navbar new-bar" data-clearcartconfirmationmessage="This will clear your cart, are you sure?" data-clearcartconfirmationtitle="Clear Cart" data-currentprocessid="18">
+			<ul>
+                    <li class="hamburger ui-hamburger nav-item">
+                        <button class="ui-hamburger"
+                                title="More Processes"
+                                aria-label="More Processes"
+                                aria-expanded="false"
+                                aria-controls="burger-menu"
+                                type="button"
+                                id="hamburger-menu-button">
+                            <i aria-hidden="true" class="fa fa-bars"></i>
+                            <span class="ham-badge ui-ham-badge" data-count=""></span>
+                        </button>
+                    </li>
+
+
+
+
+<ul id="burger-menu" class="navbar-dropdown ui-navbar-dropdown" aria-labelledby="hamburger-menu-button" tabindex="-1">
+        <li>
+            
+<a class="name nav-item ui-nav-item dropdown" href="/StarRezPortalX/Page/GetFirstPage?processID=5&amp;hash=7011472C" title="My Details">Siddharth POTTA</a>        </li>
+            <li class="divider ui-navbar-icon-divider" role="presentation"></li>
+                <li>
+                    <a class="nav-icon ui-nav-icon ui-nav-item nav-item dropdown" href="/StarRezPortalX/Page/GetFirstPage?processID=4&amp;hash=99733C0B" data-name="MessagingNavigationBarIcon">
+                        <i class="fa fa-envelope" aria-hidden="true"></i>
+                        <span>Messages</span>
+                        <span class="nav-badge ui-nav-badge" data-count="0" data-actual="0" data-autohide="False" aria-label="0" tabindex="-1"></span>
+                    </a>
+                </li>
+
+        <li class="divider"></li>
+            <li>
+                <a class="ui-more-nav-process nav-item ui-nav-item dropdown" data-processid="1" data-show-clear-cart-message="True" href="/StarRezPortalX/Page/GetFirstPageWithReturnUrl?processID=1&amp;returnUrl=%2FStarRezPortalX%2F1DD907A9%2F18%2F314%2FUniversity_Residence-Housing_Application_%3FUrlToken%3DD9CC9227%26WebPaymentID%3D264685%26TermID%3D89%26ClassificationID%3D2&amp;isPageForContact=False&amp;clearProcessContext=True&amp;hash=E4D0A745">Home</a>
+            </li>
+            <li>
+                <a class="ui-more-nav-process nav-item ui-nav-item dropdown" data-processid="18" data-show-clear-cart-message="True" href="/StarRezPortalX/Page/GetFirstPageWithReturnUrl?processID=18&amp;returnUrl=%2FStarRezPortalX%2F1DD907A9%2F18%2F314%2FUniversity_Residence-Housing_Application_%3FUrlToken%3DD9CC9227%26WebPaymentID%3D264685%26TermID%3D89%26ClassificationID%3D2&amp;isPageForContact=False&amp;clearProcessContext=True&amp;hash=02314CC4">University Residence Halls</a>
+            </li>
+            <li>
+                <a class="ui-more-nav-process nav-item ui-nav-item dropdown" data-processid="34" data-show-clear-cart-message="True" href="/StarRezPortalX/Page/GetFirstPageWithReturnUrl?processID=34&amp;returnUrl=%2FStarRezPortalX%2F1DD907A9%2F18%2F314%2FUniversity_Residence-Housing_Application_%3FUrlToken%3DD9CC9227%26WebPaymentID%3D264685%26TermID%3D89%26ClassificationID%3D2&amp;isPageForContact=False&amp;clearProcessContext=True&amp;hash=64093C59">Dobie Twenty21</a>
+            </li>
+</ul>
+				<li>
+					<ul>
+							<li class="nav-list-item">
+								<a class="ui-nav-process nav-item" data-processid="1" data-show-clear-cart-message="True" href="/StarRezPortalX/Page/GetFirstPageWithReturnUrl?processID=1&amp;returnUrl=%2FStarRezPortalX%2F1DD907A9%2F18%2F314%2FUniversity_Residence-Housing_Application_%3FUrlToken%3DD9CC9227%26WebPaymentID%3D264685%26TermID%3D89%26ClassificationID%3D2&amp;isPageForContact=False&amp;clearProcessContext=True&amp;hash=E4D0A745">Home</a>
+							</li>
+							<li class="nav-list-item">
+								<a class="ui-nav-process nav-item" data-processid="18" data-show-clear-cart-message="True" href="/StarRezPortalX/Page/GetFirstPageWithReturnUrl?processID=18&amp;returnUrl=%2FStarRezPortalX%2F1DD907A9%2F18%2F314%2FUniversity_Residence-Housing_Application_%3FUrlToken%3DD9CC9227%26WebPaymentID%3D264685%26TermID%3D89%26ClassificationID%3D2&amp;isPageForContact=False&amp;clearProcessContext=True&amp;hash=02314CC4">University Residence Halls</a>
+							</li>
+							<li class="nav-list-item">
+								<a class="ui-nav-process nav-item" data-processid="34" data-show-clear-cart-message="True" href="/StarRezPortalX/Page/GetFirstPageWithReturnUrl?processID=34&amp;returnUrl=%2FStarRezPortalX%2F1DD907A9%2F18%2F314%2FUniversity_Residence-Housing_Application_%3FUrlToken%3DD9CC9227%26WebPaymentID%3D264685%26TermID%3D89%26ClassificationID%3D2&amp;isPageForContact=False&amp;clearProcessContext=True&amp;hash=64093C59">Dobie Twenty21</a>
+							</li>
+					</ul>
+				</li>
+
+				<li>
+					<ul>
+							<li class="cart nav-list-item ui-shopping-cart">
+								
+
+							</li>
+
+							<li class="nav-item">
+								<a class="logout ui-logout" tabindex="0">Log Out</a>
+							</li>
+					</ul>
+				</li>
+			</ul>
+		</nav>
+<script type="text/javascript">$(function () {  if (portal.navigation.InitialiseCleverNavBar) { portal.navigation.InitialiseCleverNavBar($('#851a1dbe31d54cdf92beaeff210a41e7')); } else { alert('portal.navigation.InitialiseCleverNavBar: not found'); } });</script></div>
+
+
+
+        </div>
+    </nav>
+    <section class="mm-page">
+        <article class="container page-content ui-page-article">
+            
+
+
+
+
+
+
+<div class="" data-emptycarttext="There are currently no items in your cart." data-formattedpaidamount="$50.00" data-formattedsubtotalamount="$50.00" data-formattedsubtotaltax="$0.00" data-hidecontinuebuttonwhennocartitems="False" data-invalidfieldresponse="is invalid" data-portalpageid="314" data-portalrulestatus="Open" data-processid="18" data-unknowninvalidfieldresponse="This field is invalid" id="page-container">		<div class="menuhorizontal">
+				<section class="menu" aria-label="Process Menu">
+					
+<div class="" id="b8d1a49b9dc34f60872a8bc6478cdab5">        <div class="process-menu">
+            <div style="display:none" class="previous ui-process-menu-previous"></div>
+            <div class="container ui-slider-container">
+                <div class="slider ui-process-menu-slider">
+                            <a class="page ui-page current ui-current display-only">
+                                    <div class="title">Housing Application Fee Payment Confirmation</div>
+    <div class="item">
+        <div class="line"></div>
+    </div>
+
+                            </a>
+                            <a class="page ui-page upcoming ui-upcoming display-only">
+                                    <div class="title">Submit Application</div>
+    <div class="item">
+        <div class="line"></div>
+    </div>
+
+                            </a>
+                            <a class="page ui-page upcoming ui-upcoming display-only">
+                                    <div class="title">Next Steps</div>
+    <div class="item">
+        <div class="line"></div>
+    </div>
+
+                            </a>
+                            <a class="page ui-page upcoming ui-upcoming display-only">
+                                    <div class="title">Application Status</div>
+    <div class="item">
+        <div class="line"></div>
+    </div>
+
+                            </a>
+                </div>
+            </div>
+            <div style="display:none" class="transparent-bar ui-process-menu-transparent-bar"></div>
+            <div style="display:none" class="next ui-process-menu-next"></div>
+        </div>
+<script type="text/javascript">$(function () {  if (portal.processmenu.InitialiseProcessMenu) { portal.processmenu.InitialiseProcessMenu($('#b8d1a49b9dc34f60872a8bc6478cdab5')); } else { alert('portal.processmenu.InitialiseProcessMenu: not found'); } });</script></div>
+
+
+				</section>
+			<div class="page-container" role="main" id="main-content">
+
+				<section aria-label="Housing Application Fee Payment Confirmation" class="px_shoppingcartreceipt_page">
+						<h2 class="ui-page-title">
+							Housing Application Fee Payment Confirmation
+						</h2>
+
+					<div class="page sr-clearfix">
+
+<div class="ui-page-success hidden alert-success alert" role="alert" tabindex="-1">								<ul class="ui-notification-content">
+								</ul>
+</div><div class="ui-page-information hidden alert-info alert" role="alert" tabindex="-1">								<ul class="ui-notification-content">
+								</ul>
+</div><div class="ui-page-warning hidden alert-warning alert" role="alert" tabindex="-1">								<ul class="ui-notification-content">
+								</ul>
+</div><div class="ui-page-error hidden alert-error alert" role="alert" tabindex="-1">								<ul class="ui-notification-content">
+								</ul>
+</div><div class="ui-page-message hidden alert-message alert" role="alert" tabindex="-1">								<ul class="ui-notification-content">
+								</ul>
+</div><div class="ui-page-nonefound hidden alert-nonefound alert" role="alert" tabindex="-1">								<ul class="ui-notification-content">
+								</ul>
+</div>
+
+
+						
+<div class="widget-section-above widget-section ui-widget-section" data-emptycarttext="There are currently no items in your cart." data-formattedpaidamount="$50.00" data-formattedsubtotalamount="$50.00" data-formattedsubtotaltax="$0.00" data-hidecontinuebuttonwhennocartitems="False" data-invalidfieldresponse="is invalid" data-portalpageid="314" data-portalrulestatus="Open" data-processid="18" data-sectionnumber="0" data-unknowninvalidfieldresponse="This field is invalid" id="21a061b96bec417d938cfa97f0f09a1d">
+<div class="widget-container ui-widget-container" data-portalpagewidgetid="426" data-reloadonmoved="False" data-sortorder="2" id="f9cf5590d11144e7a78a605f813038ed"><div data-widgettype="NotificationSuccess">
+
+
+
+	
+<div class="alert alert-success"  data-portalpagewidgetid='426'>
+	<h3 class="ui-notification-heading">
+		Payment Successful!
+	</h3>
+
+	<div class="multiline markdown ui-notification-content"><p>Your payment was successfully processed.</p>
+</div>
+</div>
+</div></div><div class="widget-container ui-widget-container" data-portalpagewidgetid="425" data-reloadonmoved="False" data-sortorder="3" id="97423548b0b4452eb597e400cd41ee93"><div data-widgettype="ParagraphWidget"><div class="ui-text-widget" style="text-align: left"><div class="multiline markdown"><p>You can review the application fee payment information below, as well as your receipt number and other important details. You may want to print this page for future reference.</p>
+<p>Payment ID: 174330<br />
+Full Name: POTTA, SIDDHARTH (Siddharth)<br />
+Transaction Date: 12/25/2023 22:01:32<br />
+Invoice Number: 120191417861  </p>
+<h3>Items Paid</h3>
+</div></div></div></div></div>
+
+						<section class="ui-page-body page-body sr-clearfix">
+<form action="/1DD907A9/18/314/University_Residence-Housing_Application_?UrlToken=D9CC9227&amp;WebPaymentID=264685&amp;TermID=89&amp;ClassificationID=2" class="ui-page-content-form" method="post" role="form">
+<div class="cart-item-list ui-cart-item-list" data-emptycarttext="There are currently no items in your cart." data-formattedpaidamount="$50.00" data-formattedsubtotalamount="$50.00" data-formattedsubtotaltax="$0.00" data-hidecontinuebuttonwhennocartitems="False" data-invalidfieldresponse="is invalid" data-portalpageid="314" data-portalrulestatus="Open" data-processid="18" data-unknowninvalidfieldresponse="This field is invalid" id="fe96f1f0465a4cb8ac9558eea71c2580">		<div class="shopping-cart ui-shopping-cart">
+			<table class="active-table ui-active-table tablesorter" data-hasselectallcheckbox="False" data-hastablesorter="True" data-isaccessible="True" data-multipleselect="False" data-pageable-object="" data-pagesize="30" data-pagination-style="None" data-rowsreorderable="False" data-usedefaultselectallstatefornewrows="False" data-width-type="FitToScrollContainer" id="e2a14ea3-ee26-4f8a-82d3-23ad0e85e2ee" role="table"><thead class="px-accessible-activetable"><tr role="row"><th class="{sorter: &#39;text&#39;} ui-orderable orderable align-left" data-colname="Description" data-fixedwidth="0"><div class="header-text ui-header-text">Item Description</div></th><th class="ui-orderable orderable ui-amount-column align-left" data-colname="TotalAmount" data-fixedwidth="0"><div class="header-text ui-header-text">Total Amount ($)</div></th><th class="{sorter: &#39;text&#39;} ui-orderable orderable align-left" data-colname="Status" data-fixedwidth="0"><div class="header-text ui-header-text">Status</div></th></tr></thead><tbody class="has-breakdown"><tr class="can-select ui-activetablerow" data-description="Application Fee" data-quantity="-1" data-table="89" data-tablename="Term" data-totalamount="50.00" data-unitamount="50" role="row" tabindex="-1"><td class="string description align-left" data-label="Item Description" role="cell"><span class="field view-control" data-name="Description">Application Fee</span></td><td class="ui-amount totalamount align-left" data-label="Total Amount ($)" role="cell"><span>$50.00</span></td><td class="string status align-left" data-label="Status" role="cell"><span class="field view-control" data-name="Status">Success</span></td></tr></tbody></table>
+		</div>
+<script type="text/javascript">$(function () {  if (portal.shoppingcart.shoppingcartcheckout.CheckoutInit) { portal.shoppingcart.shoppingcartcheckout.CheckoutInit($('#fe96f1f0465a4cb8ac9558eea71c2580')); } else { alert('portal.shoppingcart.shoppingcartcheckout.CheckoutInit: not found'); } });</script></div></form>						</section>
+
+					</div>
+
+					<div class="page-actions ui-page-actions">
+<button aria-label="Save &amp; Continue" class="ui-submit-page-content sr_button_primary sr_button" title="Save &amp; Continue" type="button"><i class="fa NoShow sr_button_primary_icon"></i><span class="ui_button_caption sr_button_primary_caption">Save &amp; Continue</span></button>
+					</div>
+				</section>
+			</div>
+		</div>
+<script type="text/javascript">$(function () {  if (portal.page.PageInitialise) { portal.page.PageInitialise($('#page-container')); } else { alert('portal.page.PageInitialise: not found'); } });</script></div>
+
+        </article>
+    </section>
+    <footer class="ui-page-footer">
+        <div class="container">
+
+            <div class="col2">
+                <div role="presentation" class="logo"></div>
+                <ul>
+<li><a href="http://housing.utexas.edu/" target="_blank" rel="noopener noreferrer">University Housing and Dining</a></li>
+<li><a href="http://www.utexas.edu/site-policies" target="_blank" rel="noopener noreferrer">Site Policies</a></li>
+<li>© 2023 <a href="http://www.utexas.edu/" target="_blank" rel="noopener noreferrer">The University of Texas at Austin</a></li>
+</ul>
+
+            </div>
+
+            <div class="col2">
+                <ul>
+<li><a href="http://www.utexas.edu/cio/policies/web-accessibility" target="_blank" rel="noopener noreferrer">Web Accessibility Policy</a></li>
+<li><a href="http://www.utexas.edu/cio/policies/web-privacy" target="_blank" rel="noopener noreferrer">Web Privacy Policy</a></li>
+<li><a href="https://get.adobe.com/reader/" target="_blank" rel="noopener noreferrer">Adobe Reader</a></li>
+</ul>
+
+            </div>
+        </div>
+    </footer>
+    <section class="copyright" aria-label="copyright">
+        <div class="container">
+            <div class="col1">
+                Powered by  <a href="http://www.starrez.com" target="_blank" rel="noopener noreferrer">StarRez</a> - &copy; 2023 StarRez Inc.
+            </div>
+        </div>
+    </section>
+
+
+			<!-- to here -->
+		</div>
+
+	<div class="srw" id="srw_container">
+		
+	</div>
+
+	<div class="portalx" id="portalx_container">
+		<div class="visible-on-mobile" id="visible_on_mobile_div"></div>
+		
+<div class="modal fade" id="messageDialog" tabindex="-1" aria-labelledby="dialogTitle" aria-describedby="dialogBody" aria-modal="true" role="alertdialog">
+	<div class="modal-dialog ui-modal-dialog modal-sm">
+		<div class="modal-content ui-modal-content">
+			<div class="modal-header ui-modal-header">
+				<div class="modal-title" id="dialogTitle"></div>
+			</div>
+			<div class="modal-body ui-modal-body" id="dialogBody">
+				<div class="ui-message"></div>
+			</div>
+			<div class="modal-footer ui-modal-footer">
+				<div>
+					<div class="ui-standard">
+						<button aria-label="Close" class="ui-btn-closepopup sr_button_secondary sr_button" data-dismiss="modal" type="button"><i class="fa NoShow sr_button_secondary_icon"></i><span class="ui_button_caption sr_button_secondary_caption">Close</span></button>
+					</div>
+
+					<div class="ui-confirmation">
+						<button aria-label="Yes" class="ui-btn-submitpopup sr_button_primary sr_button" data-dismiss="modal" type="button"><i class="fa NoShow sr_button_primary_icon"></i><span class="ui_button_caption sr_button_primary_caption">Yes</span></button>
+						<button aria-label="No" class="ui-btn-closepopup sr_button_secondary sr_button" data-dismiss="modal" type="button"><i class="fa NoShow sr_button_secondary_icon"></i><span class="ui_button_caption sr_button_secondary_caption">No</span></button>
+					</div>
+
+					<div class="ui-delete">
+						<div class="ui-btn-submitpopup  delete ui-image-button-container image-button-container" data-dismiss="modal" role="button" tabindex="0" title=""><div class="image-button"><div class=" noshow image-button-image ui-image-button-image"></div><div class="image-button-text ui-image-button-text">Delete</div></div></div>
+						<button aria-label="Cancel" class="ui-btn-closepopup sr_button_secondary sr_button" data-dismiss="modal" type="button"><i class="fa NoShow sr_button_secondary_icon"></i><span class="ui_button_caption sr_button_secondary_caption">Cancel</span></button>
+					</div>
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+		<div class="global-loading" id="global-loading"><div class="ui-clear-background clear-background"></div><div class="ui-global-loading-animation global-loading-animation"><div></div><div></div><div></div><div></div></div><progress class="ui-global-loading-progress hidden global-loading-progress" max="100"></progress></div>
+	</div>
+
+	<input name="__RequestVerificationToken" type="hidden" value="Po2ikCuc7XSCEUuT3q_gEpO3YdXk_IftksYvlLakeM8nvfM0F8jnpzepPe1FFD58VSdxD_xn1K7kiD132KB1QTKSR2CAXOuBsOpim0us4cRE-TvLH1-Nz7vYVT8NUsbzqGesupXdw2G8i0nKZm2kgA2" />
+
+</body>
+</html>
